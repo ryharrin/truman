@@ -150,21 +150,7 @@ var j3 = schedule.scheduleJob(rule3, function(){
   userController.stillActive();
 }); 
 
-
-/**
- * Express configuration.
- */
-app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
-//app.use(expressStatusMonitor());
-//app.use(compression());
-
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(expressValidator());
-app.use(session({
+const sessionConfig = {
   resave: true,
   saveUninitialized: true,
   rolling: false,
@@ -180,7 +166,22 @@ app.use(session({
     autoReconnect: true,
     clear_interval: 3600
   })
-}));
+}
+
+/**
+ * Express configuration.
+ */
+app.set('port', process.env.PORT || 3000);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+//app.use(expressStatusMonitor());
+//app.use(compression());
+
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(expressValidator());
+app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());

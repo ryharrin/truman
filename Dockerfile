@@ -1,13 +1,11 @@
-FROM node:6.6.0
-
-COPY . /starter
-COPY package.json /starter/package.json
-COPY .env.example /starter/.env.example
+FROM node:12
 
 WORKDIR /starter
-
+COPY package.json /starter/package.json
 RUN npm install 
+
+COPY . /starter
 
 CMD ["npm","start"]
 
-EXPOSE 8888
+EXPOSE 3000
